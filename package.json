@@ -1,0 +1,26 @@
+{
+  "name": "vue-excel-upload",
+  "version": "1.0.0",
+  "description": "Vue plugin to read/write excel files and process them in vuex state.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "vue",
+    "excel-reader",
+    "bulk-upload",
+    "excel"
+  ],
+  "author": "Bhaskar Nair",
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "uuid": "^8.3.2",
+    "xlsx": "^0.17.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.30.0",
+    "eslint-config-google": "^0.14.0"
+  }
+}
