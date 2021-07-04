@@ -2,6 +2,7 @@
   "name": "vue-excel-upload",
   "version": "1.0.0",
   "description": "Vue plugin to read/write excel files and process them in vuex state.",
+  "type": "module",
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -22,5 +23,8 @@
   "devDependencies": {
     "eslint": "^7.30.0",
     "eslint-config-google": "^0.14.0"
+  },
+  "peerDependencies": {
+    "vue": "^2.x"
   }
 }

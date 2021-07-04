@@ -30,24 +30,19 @@ function excelFileToUT8Array(file) {
  * @return {Array}
  */
 async function ut8ArraytoJSON(ut8ar, startRow) {
-  try {
-    const workbook = XLSX.read(ut8ar, { type: 'array' });
-    let jsonData = [];
-
-
-    // Just read the first sheet and convert tot json
-    jsonData = XLSX.utils.sheet_to_json(workbook.Sheets[0], {
-      'header': 'A', // header type
-      'range': startRow,
-    });
-
-    // const data = await p.map(XLSX.utils.sheet_to_json, {);
-
-    return jsonData;
-  } catch (error) {
-    console.error(error);
-    throw new Error('Error in parsing File');
-  }
+  return new Promise((resolve, reject) => {
+    try {
+      const workbook = XLSX.read(ut8ar, { type: 'array' });
+      const firstWorksheet = workbook.Sheets[workbook.SheetNames[0]];
+      const jsonData = XLSX.utils.sheet_to_json(firstWorksheet, {
+        header: 'A',
+        range: startRow,
+      });
+      resolve(jsonData);
+    } catch (error) {
+      reject(new Error('Error in parsing File'));
+    }
+  });
 }
 
 /**
@@ -56,10 +51,16 @@ async function ut8ArraytoJSON(ut8ar, startRow) {
  * @param {number} startRow
  * @return {Array}
  */
-async function processFile(file, startRow) {
-  const ut8ar = await excelFileToUT8Array(file);
-  const jsonData = await ut8ArraytoJSON(ut8ar, startRow);
-  return jsonData;
+async function processFile(file, startRow = 0) {
+  try {
+    const ut8ar = await excelFileToUT8Array(file);
+    const jsonData = await ut8ArraytoJSON(ut8ar, startRow);
+    console.log('mod: ', jsonData);
+    return jsonData;
+  } catch (error) {
+    console.log(error);
+    throw new Error('Error in processing data');
+  }
 }
 
 export {
