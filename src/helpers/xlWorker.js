@@ -1,4 +1,5 @@
 import XLSX from 'xlsx';
+// import async from 'async';
 
 /**
  *
@@ -29,40 +30,34 @@ function excelFileToUT8Array(file) {
  * @param {number} startRow
  * @return {Array}
  */
-async function ut8ArraytoJSON(ut8ar, startRow) {
-  return new Promise((resolve, reject) => {
-    try {
-      const workbook = XLSX.read(ut8ar, { type: 'array' });
-      const firstWorksheet = workbook.Sheets[workbook.SheetNames[0]];
-      const jsonData = XLSX.utils.sheet_to_json(firstWorksheet, {
-        header: 'A',
-        range: startRow,
-      });
-      resolve(jsonData);
-    } catch (error) {
-      reject(new Error('Error in parsing File'));
-    }
+async function ut8ArraytoJSON(ut8ar, startRow = 0) {
+  const workbook = XLSX.read(ut8ar, { type: 'array' });
+  const firstWorksheet = workbook.Sheets[workbook.SheetNames[0]];
+
+  // TODO: Make this non-blocking
+  const jsonData = XLSX.utils.sheet_to_json(firstWorksheet, {
+    header: 'A',
+    range: startRow,
   });
+  return jsonData;
 }
 
 /**
- *
+ * @description Convert given excel file to json
  * @param {file} file
  * @param {number} startRow
- * @return {Array}
+ * @return {Promise<Array>}
  */
-async function processFile(file, startRow = 0) {
+async function excelToJson(file, startRow = 0) {
   try {
     const ut8ar = await excelFileToUT8Array(file);
     const jsonData = await ut8ArraytoJSON(ut8ar, startRow);
-    console.log('mod: ', jsonData);
     return jsonData;
   } catch (error) {
-    console.log(error);
     throw new Error('Error in processing data');
   }
 }
 
 export {
-  processFile,
+  excelToJson,
 };

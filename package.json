@@ -1,5 +1,5 @@
 {
-  "name": "vue-excel-upload",
+  "name": "@bstark/vue-excel-upload",
   "version": "1.0.0",
   "description": "Vue plugin to read/write excel files and process them in vuex state.",
   "type": "module",
@@ -9,15 +9,16 @@
   },
   "keywords": [
     "vue",
-    "excel-reader",
-    "bulk-upload",
-    "excel"
+    "excel reader",
+    "bulk upload",
+    "excel to json"
   ],
   "author": "Bhaskar Nair",
   "license": "ISC",
   "dependencies": {
+    "async": "^3.2.0",
     "lodash": "^4.17.21",
-    "uuid": "^8.3.2",
+    "nanoid": "^3.1.23",
     "xlsx": "^0.17.0"
   },
   "devDependencies": {
@@ -25,6 +26,6 @@
     "eslint-config-google": "^0.14.0"
   },
   "peerDependencies": {
-    "vue": "^2.x"
+    "vue": "^x"
   }
 }

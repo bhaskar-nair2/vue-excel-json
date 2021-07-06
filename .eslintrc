@@ -11,6 +11,8 @@
   "extends": ["eslint:recommended", "google"],
   "rules": {
     // Additional, per-project rules...
-    "object-curly-spacing":"off"
+    "object-curly-spacing":"off",
+    "no-unused-vars":"warn",
+    "no-console":"warn"
   }
 }

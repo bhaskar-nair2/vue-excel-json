@@ -13,3 +13,18 @@ mounted() {
     excel.init(this.$store)
   },
 ```
+
+```js
+const sampleMapping = {
+  'A': {
+    title: 'Name',
+    formatter: () => { },
+    validator: () => { },
+  },
+  'B': {
+    title: 'Name',
+    formatter: (value) => value,
+    validator: () => { },
+  },
+};
+```
