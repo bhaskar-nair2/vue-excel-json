@@ -21,6 +21,21 @@ export default class VueExcel {
     this.store = store;
   }
 
+  /**
+   * @description simple register store function
+   * @param {VuexStore} store
+   */
+  static registerStore(store) {
+    if (!store) {
+      throw new Error('vue-excel-upload needs Vuex store to work');
+    } else if (!store.hasModule('excelStore')) {
+      store.registerModule('excelStore', excelStore);
+    }
+
+    // ? Store is read as a singleton,
+    this.store = store;
+  }
+
   // * File Functions
   /**
    * @description Function to take a file and convert it to JSON for
@@ -40,6 +55,22 @@ export default class VueExcel {
       throw new Error('Error in processing file');
     }
   }
+
+  /**
+   *
+   * @param {Array} data
+   * @param {Object} options
+   */
+  // writeFile(data, options) {
+  //   const workbook = XLSX.utils.book_new();
+  //   const ws = XLSX.utils.json_to_sheet(data);
+  //   XLSX.utils.book_append_sheet(workbook, ws, 'Sheet1');
+  //   XLSX.writeFile(workbook, 'rejected-list.xlsx', {
+  //     bookType: 'xlsx',
+  //     bookSST: false,
+  //     type: 'array',
+  //   });
+  // }
 
   // * Data functions
   /**
