@@ -1,4 +1,4 @@
-import XLSX from 'xlsx';
+import { read, utils } from 'xlsx';
 // import async from 'async';
 
 /**
@@ -31,11 +31,11 @@ function excelFileToUT8Array(file) {
  * @return {Array}
  */
 async function ut8ArraytoJSON(ut8ar, startRow = 0) {
-  const workbook = XLSX.read(ut8ar, { type: 'array' });
+  const workbook = read(ut8ar, { type: 'array' });
   const firstWorksheet = workbook.Sheets[workbook.SheetNames[0]];
 
   // TODO: Make this non-blocking
-  const jsonData = XLSX.utils.sheet_to_json(firstWorksheet, {
+  const jsonData = utils.sheet_to_json(firstWorksheet, {
     header: 'A',
     range: startRow,
   });

@@ -28,3 +28,5 @@ const sampleMapping = {
   },
 };
 ```
+
+## Issues with reactivity

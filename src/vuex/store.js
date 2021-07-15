@@ -8,16 +8,16 @@ export default {
     rawData: [],
     parsedData: {},
     mappings: {
-      'A': {
-        title: 'Name',
-        formatter: (value) => value,
-        validator: () => true,
-      },
-      'B': {
-        title: 'Description',
-        formatter: (value) => value,
-        validator: () => true,
-      },
+      // 'A': {
+      //   title: 'Name',
+      //   formatter: (value) => value,
+      //   validator: () => true,
+      // },
+      // 'B': {
+      //   title: 'Description',
+      //   formatter: (value) => value,
+      //   validator: () => true,
+      // },
     },
   },
   mutations: {
@@ -65,6 +65,16 @@ export default {
     rawList: (state) => state.rawData,
     parsedList: (state) => Object.values(state.parsedData),
     parsedItemByID: (state) => (id) => state.parsedData[id],
+    // Used to reference properties
+    reverseMappings: (state) => {
+      const mappings = state.mappings;
+      const ret = {};
+      Object.keys(mappings).forEach((key) => {
+        const val = mappings[key];
+        ret[val.title] = { ...val, key };
+      });
+      return ret;
+    },
   },
   actions: {
     /**
@@ -100,9 +110,8 @@ export default {
       return parsed;
     },
 
+    // Item parser
     itemParser({ state }, item) {
-      // ! Move item creation function here
-      // ! Move to a itemParser function
       const ret = {}; // Return value
       let flag = true; // Validator Flag
       const errors = [];
@@ -145,5 +154,51 @@ export default {
       ret._errors = errors;
       return ret;
     },
+    setParsedItem(
+      { getters, commit },
+      { value, id, validate = false, format = false },
+    ) {
+      let flag = true; // Validator Flag
+      const errors = [];
+
+      // ? Because now the object is already in new form
+      const mappings = getters.reverseMappings;
+      // ? Like ['Name', 'Description']
+      const keys = Object.keys(mappings);
+
+      keys.forEach((key) => {
+        const mapVal = mappings[key];
+        const {
+          title,
+          validator = () => true,
+          formatter = (v) => v,
+        } = mapVal;
+
+        let itemValue = value[key];
+
+        if (format) {
+          itemValue = formatter(itemValue);
+        }
+
+        if (validate) {
+          const isValid = validator(itemValue);
+          // ? message to show which field is invalid
+          if (!isValid) errors.push({ title, key });
+
+          // ? Compute a cumalative flag
+          flag = flag && isValid;
+        }
+      });
+
+      value._valid = flag;
+      value._errors = errors;
+
+      commit('SET_ITEM_BY_ID', {
+        id: id,
+        value: value,
+      });
+    },
   },
+
+
 };

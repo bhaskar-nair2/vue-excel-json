@@ -1,11 +1,12 @@
 {
   "name": "@bstark/vue-excel-upload",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Vue plugin to read/write excel files and process them in vuex state.",
   "type": "module",
   "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "NODE_ENV=production webpack --config webpack.config.cjs"
   },
   "keywords": [
     "vue",
