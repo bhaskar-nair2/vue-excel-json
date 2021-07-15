@@ -1,6 +1,6 @@
 {
   "name": "vue-excel-json",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Vue plugin to read/write excel files and process them in vuex state.",
   "type": "module",
   "main": "dist/vue-excel.js",
