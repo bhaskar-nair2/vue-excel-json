@@ -30,3 +30,11 @@ const sampleMapping = {
 ```
 
 ## Issues with reactivity
+
+If you are planning to display the parsed list as a table using computed properties, you may face issues if the store is not registered before calling the computed property. To avoid that, you can simply register store in your component beforehand.
+
+```js
+created() {
+    VueExcel.registerStore(this.$store)
+},
+```
